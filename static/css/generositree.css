@@ -1,6 +1,7 @@
-.has-tree-background {
+body {
 	background-image: url("/static/images/tree_right.png");
-	background-size: 50%;
-	background-position: bottom left;
+	background-size: 100%;
+    background-attachment: fixed;
+    background-position: center;
 	background-repeat: no-repeat;
 }

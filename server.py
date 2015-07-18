@@ -21,7 +21,7 @@ def index():
     return render_template('homepage.html')
 
 
-@app.route('/donor_landing', methods=['GET'])
+@app.route('/donor_landing', methods=['POST'])
 def show_donor_landing():
     """This will route the donor to the donor landing page"""
     
