@@ -21,7 +21,7 @@ def create_donations():
 	donation_amt = random.randint(5, 2000)
 	donor_id = random.randrange(1, 100)
 	org_id = random.randrange(1, 5)
-	campaign_id = random.randrange(1, 3)
+	campaign_id = random.randrange(1, 4)
 
 	a_donation = Donation(donated_at = donated_at,
 							donation_amt = donation_amt,

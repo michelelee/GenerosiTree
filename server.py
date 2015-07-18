@@ -60,6 +60,9 @@ def get_chart_data():
 
     return jsonify(donations = donations)
 
+# @app.route("/donations_by_demographic")
+
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
