@@ -1,3 +1,4 @@
+
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
@@ -22,7 +23,7 @@ def index():
     return render_template('homepage.html')
 
 
-@app.route('/donor_landing', methods=['GET'])
+@app.route('/donor_landing', methods=['POST'])
 def show_donor_landing():
     """This will route the donor to the donor landing page"""
     
@@ -76,3 +77,4 @@ if __name__ == "__main__":
     # DebugToolbarExtension(app)
 
     app.run()
+

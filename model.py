@@ -1,9 +1,12 @@
+
 """Model and database"""
+
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint
 
 db = SQLAlchemy()
+
 
 
 class Donor(db.Model):
@@ -92,3 +95,4 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print "Connected to DB."
+

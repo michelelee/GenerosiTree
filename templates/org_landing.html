@@ -4,7 +4,9 @@
 
 <h3>Reach out to connect to your donors</h3>
 
+
 <button type="button" id="dialog_btn">Text all donors</button>
+
 <div id="dialog" title="Message to Donors">
 
 <form method="post" action="message_input">
@@ -19,7 +21,11 @@
 <div id="donations_over_time" style="width:100%; height:400px;"></div>
 
 
-<script>
+<script type="text/javascript">
+	
+	$("#onclick").click(function() {
+		$("#writemessage").css("display", "block");
+	});
 
 $("#dialog").hide();
 
@@ -36,6 +42,7 @@ var campaign2;
 var campaign3;
 
 function donationsOverTime (result) {
+    console.log(result)
     var coordinates1 = []
     var total_progress1 = 0
     var coordinates2 = []
