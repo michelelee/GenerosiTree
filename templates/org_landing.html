@@ -23,6 +23,10 @@
 $.get("/donations_over_time",
     donationsOverTime)
 
+var campaign1;
+var campaign2;
+var campaign3;
+
 function donationsOverTime (result) {
     var coordinates1 = []
     var total_progress1 = 0
@@ -32,7 +36,7 @@ function donationsOverTime (result) {
     var total_progress3 = 0
     _.each(result.donations, function(donation) {
         if (donation.campaign_id == 1) {
-          var campaign1 = "STEM Program for Girls"
+          campaign1 = "STEM Program for Girls"
           total_progress1 = total_progress1 + donation.donation_amt
           var donated_at = donation.donated_at
           donated_at = new Date(donated_at)
@@ -42,7 +46,7 @@ function donationsOverTime (result) {
           coordinates1.push([time, total_progress1])
         };
         if (donation.campaign_id == 2) {
-          var campaign2 = "Hour of Code"
+          campaign2 = "Hour of Code"
           total_progress2 = total_progress2 + donation.donation_amt
           var donated_at = donation.donated_at
           donated_at = new Date(donated_at)
@@ -52,7 +56,7 @@ function donationsOverTime (result) {
           coordinates2.push([time, total_progress2])
         }
         if (donation.campaign_id == 3) {
-          var campaign3 = "Road to Higher Education"
+          campaign3 = "Road to Higher Education"
           total_progress3 = total_progress3 + donation.donation_amt
           var donated_at = donation.donated_at
           donated_at = new Date(donated_at)
@@ -63,65 +67,63 @@ function donationsOverTime (result) {
         }
     })
 
-    function donationsOverTimeChart() {
-      console.log("here")
-        $('#donations_over_time').highcharts({
-            chart: {
-                type: 'area'
+    $(function () {
+      $('#donations_over_time').highcharts({
+          chart: {
+              type: 'area'
+          },
+          title: {
+              text: 'Donations Over Time'
+          },
+          xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+              month: '%e %b',
+              year: '%b'
             },
-            title: {
-                text: 'Donations Over Time'
-            },
-            xAxis: {
-                allowDecimals: false,
-                labels: {
-                    formatter: function () {
-                        return this.value; // clean, unformatted number for year
-                    }
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Donations over time, by campaign'
-                },
-                labels: {
-                    formatter: function () {
-                        return this.value;
-                    }
-                }
-            },
-            tooltip: {
-                pointFormat: '{series.name} has collected $<b>{point.y}</b>'
-            },
-            plotOptions: {
-                area: {
-                    pointStart: 1940,
-                    marker: {
-                        enabled: false,
-                        symbol: 'circle',
-                        radius: 2,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
-                    }
-                }
-            },
-            series: [{
-                name: campaign1,
-                data: coordinates1
-            }, 
-            {
-                name: campaign2,
-                data: coordinates2
-            },
-            {
-                name: campaign3,
-                data: coordinates3
-            }]
+          },
+          yAxis: {
+              title: {
+                  text: 'Donations over time, by campaign'
+              },
+              labels: {
+                  formatter: function () {
+                      return this.value;
+                  }
+              }
+          },
+          tooltip: {
+              pointFormat: '{series.name} has collected $<b>{point.y}</b>'
+          },
+          plotOptions: {
+              area: {
+                  pointStart: 1940,
+                  marker: {
+                      enabled: false,
+                      symbol: 'circle',
+                      radius: 2,
+                      states: {
+                          hover: {
+                              enabled: true
+                          }
+                      }
+                  }
+              }
+          },
+          series: [{
+              name: campaign1,
+              data: coordinates1
+          }, 
+          {
+              name: campaign2,
+              data: coordinates2
+          },
+          {
+              name: campaign3,
+              data: coordinates3
+          }]
         });
-    };
+    });
   };
 
 

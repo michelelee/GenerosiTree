@@ -56,6 +56,8 @@ def get_chart_data():
             a.pop('_sa_instance_state')
         donations.append(a)
 
+    donations.sort()
+
     return jsonify(donations = donations)
 
 
