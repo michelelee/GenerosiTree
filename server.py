@@ -41,11 +41,7 @@ def show_org_land():
 
 
 @app.route("/donations_over_time", methods = ['GET'])
-def get_chart_data():
-
-    # info_needed = (donation.donation_amt,
-    #                 donation.donated_at,
-    #                 donation.campaign_id)
+def get_donations_over_time_data():
 
     donation_objects = Donation.query.all()
 
@@ -61,8 +57,28 @@ def get_chart_data():
 
     return jsonify(donations = donations)
 
-# @app.route("/donations_by_demographic")
+@app.route("/donations_by_demographic", methods = ['GET'])
+def get_donations_by_demographic():
 
+    donor_objects = Donor.query.all()
+
+    donors = []
+
+    for donor in donor_objects:
+        a = donor.__dict__
+        donor_id = donor.donor_id
+        donations = Donation.query.filter(donor_id == donor_id).all()
+        donation_amt = 0
+        for donation in donations:
+            donation_amt += donation.donation_amt
+        a["donation_amt"] = donation_amt
+        if '_sa_instance_state' in a:
+            a.pop('_sa_instance_state')
+        donors.append(a)
+
+    # print donors
+
+    return jsonify(donors = donors)
 
 
 if __name__ == "__main__":
