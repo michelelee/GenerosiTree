@@ -4,16 +4,16 @@
 
 <h3>Reach out to connect to your donors</h3>
 
-
-<button type="button" id="dialog_btn">Text all donors</button>
-
+<div>
+<button type="button" class="btn btn-primary btn-md" id="dialog_btn">Text all donors</button>
+</div>
 <div id="dialog" title="Message to Donors">
 
-<form method="post" action="message_input">
+<form method="post" action="/message_input">
 	<label>Write a message to your donors (limit to 400 characters)
 		<input type="text" name="message" maxlength="400">
 	</label>
-	<input type="submit" class="btn btn-primary btn-lg" value="Submit">
+	<input type="submit" class="btn btn-primary btn-md" value="Submit">
 </form>
 </div>
 
@@ -31,6 +31,17 @@ $("#dialog").hide();
 
 
 $("#dialog_btn").on("click", function () {
+  $("#dialog").show();
+})
+
+$("#onclick").click(function() {
+	$("#writemessage").css("display", "block");
+	});
+
+$("#dialog").hide();
+
+
+$("#dialog_btn2").on("click", function () {
   $("#dialog").show();
 })
 
