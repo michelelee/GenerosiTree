@@ -1,10 +1,12 @@
 
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
-# from flask_debugtoolbar import DebugToolbarExtension
+from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, db, Donor, Donation, Org, Campaign
-# from text import send_text
 import json
+from twilio.rest import TwilioRestClient
+import twilio
+import os
 
 app = Flask(__name__)
 
@@ -13,6 +15,10 @@ app.secret_key = "ABC"
 
 app.jinja_env.undefined = StrictUndefined
 
+account_sid = os.environ['ACCOUNT_SID']
+auth_token = os.environ['AUTH_TOKEN']
+caller=os.environ['TWILIO_PHONE']
+receiver=os.environ['GRANTEE']
 
 @app.route('/')
 def index():
@@ -29,6 +35,16 @@ def show_donor_landing():
     
     return render_template('donor_landing.html')
 
+@app.route('/go_to_org')
+def go_to_org():
+    """Routes to organization page."""
+    return render_template('org_landing.html')
+    
+@app.route('/donate', methods=['POST'])
+def get_donation():
+    # stripe.api_key = "sk_test_frMFHRq8QkHkwAl028zWBmag"
+    # if request.form['value'] == '50':
+    return render_template('thank_you.html')
 
 @app.route('/org_landing', methods=['GET', 'POST'])
 def show_org_land():
@@ -38,7 +54,27 @@ def show_org_land():
         # campaign1=campaign1, campaign2=campaign2, campaign3=campaign3
         )
 
+@app.route('/message_input', methods=['POST'])
+def send_text():
+    try:
+        body = request.form['message']
+        caller=os.environ['TWILIO_PHONE']
+        receiver=os.environ['GRANTEE']
+        client = twilio.rest.TwilioRestClient(account_sid, auth_token)
+        message = client.messages.create(body=body,
+        to=receiver,
+        from_=caller)
+    except twilio.TwilioRestException as e:
+        print e
+    return render_template('org_landing.html')
 
+# @app.route('/received_messages', methods=['POST']) 
+# def receive_texts(ACCOUNT_SID=account_sid, AUTH_TOKEN=auth_token):
+#     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)   
+#     message = client.messages.get('SM9ab8d5a6fd7b72387de6c869f529ccbc') 
+#     text_body = message.body
+#     print text_body
+#     return render_template('org_landing.html', messages="a message") 
 
 @app.route("/donations_over_time", methods = ['GET'])
 def get_donations_over_time_data():
@@ -90,7 +126,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     app.run()
-
